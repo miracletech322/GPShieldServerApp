@@ -1,7 +1,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
+#include <QtWidgets>
+
+#include "tcpserver.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -17,7 +19,15 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    static MainWindow* getInstance();
+    void handleProcessStatus(int nStatus, QString strMessage = "");
+
+protected:
+    void closeEvent(QCloseEvent *event);
+
 private:
     Ui::MainWindow *ui;
+
+    TcpServer m_server;
 };
 #endif // MAINWINDOW_H
