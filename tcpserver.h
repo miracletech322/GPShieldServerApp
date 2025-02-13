@@ -3,6 +3,7 @@
 
 #include <QTcpServer>
 #include <QByteArray>
+#include <QMutex>
 
 class TcpSocket;
 
@@ -12,7 +13,7 @@ class TcpServer : public QTcpServer
 public:
     TcpServer(QObject *parent = nullptr);
 
-    void handleProcess(QByteArray bytes);
+    void handleProcess(int nHeader, QString strIp, QString strName);
 
 protected:
     void incomingConnection(qintptr socketDescriptor) override;
@@ -22,6 +23,7 @@ public slots:
 
 private:
     QList<TcpSocket*> m_lstSocket;
+    QMutex m_mutex;
 };
 
 #endif // TCPSERVER_H

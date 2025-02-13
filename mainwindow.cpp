@@ -45,7 +45,22 @@ void MainWindow::handleProcessStatus(int nStatus, QString strMessage)
 
     if(nStatus == HandleProcessStatus::HPS_PEER_CLOSED)
     {
-        ui->plainTextEdit->appendPlainText(tr("A new peer has successfully disconnected..."));
+        ui->plainTextEdit->appendPlainText(tr("A new peer has successfully disconnected. %1").arg(strMessage));
+    }
+
+    if(nStatus == HandleProcessStatus::HPS_PEER_SET_INFO)
+    {
+        ui->plainTextEdit->appendPlainText(tr("A new peer has updated its information: %1").arg(strMessage));
+    }
+
+    if(nStatus == HandleProcessStatus::HPS_PEER_SEND)
+    {
+        ui->plainTextEdit->appendPlainText(tr("A new peer has sent alert: %1").arg(strMessage));
+    }
+
+    if(nStatus == HandleProcessStatus::HPS_PEER_RECEIVED)
+    {
+        ui->plainTextEdit->appendPlainText(strMessage);
     }
 }
 

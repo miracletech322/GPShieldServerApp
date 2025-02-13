@@ -5,6 +5,7 @@
 TcpSocket::TcpSocket(int socketDescriptor, QObject *parent)
     : QTcpSocket{parent}
 {
+    m_pServer = (TcpServer*)parent;
     if(!setSocketDescriptor(socketDescriptor))
     {
         emit sig_error(this);
@@ -34,9 +35,38 @@ void TcpSocket::slt_readyRead()
 
     if(nHeader == RequestHeader::RH_SET_NAME)
     {
+        QString strIp;
         QString strName;
+
+        in >> strIp;
         in >> strName;
+
+        setPeerAddress(QHostAddress(strIp));
         setPeerName(strName);
+
+        m_pServer->handleProcess(nHeader, strIp, strName);
+    }
+
+    if(nHeader == RequestHeader::RH_SEND_ALERT)
+    {
+        QString strIp;
+        QString strName;
+
+        in >> strIp;
+        in >> strName;
+
+        m_pServer->handleProcess(nHeader, strIp, strName);
+    }
+
+    if(nHeader == RequestHeader::RH_RECEIVED_ALERT)
+    {
+        QString strIp;
+        QString strName;
+
+        in >> strIp;
+        in >> strName;
+
+        m_pServer->handleProcess(nHeader, strIp, strName);
     }
 
     in.commitTransaction();
