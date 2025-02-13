@@ -31,16 +31,17 @@ void TcpSocket::slt_readyRead()
     in.startTransaction();
 
     int nHeader;
+    QString strIp;
+    QString strName;
+
     in >> nHeader;
+    in >> strIp;
+    in >> strName;
+
+    in.commitTransaction();
 
     if(nHeader == RequestHeader::RH_SET_NAME)
     {
-        QString strIp;
-        QString strName;
-
-        in >> strIp;
-        in >> strName;
-
         setPeerAddress(QHostAddress(strIp));
         setPeerName(strName);
 
@@ -49,27 +50,13 @@ void TcpSocket::slt_readyRead()
 
     if(nHeader == RequestHeader::RH_SEND_ALERT)
     {
-        QString strIp;
-        QString strName;
-
-        in >> strIp;
-        in >> strName;
-
         m_pServer->handleProcess(nHeader, strIp, strName);
     }
 
     if(nHeader == RequestHeader::RH_RECEIVED_ALERT)
     {
-        QString strIp;
-        QString strName;
-
-        in >> strIp;
-        in >> strName;
-
-        m_pServer->handleProcess(nHeader, strIp, strName);
+        m_pServer->handleProcess(nHeader, strIp, strName, this);
     }
-
-    in.commitTransaction();
 }
 
 void TcpSocket::slt_disconnected()

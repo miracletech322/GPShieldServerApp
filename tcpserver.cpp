@@ -10,7 +10,7 @@ TcpServer::TcpServer(QObject *parent)
 
 }
 
-void TcpServer::handleProcess(int nHeader, QString strIp, QString strName)
+void TcpServer::handleProcess(int nHeader, QString strIp, QString strName, TcpSocket* pSocket)
 {
     QMutexLocker locker(&m_mutex);
     if(nHeader == RequestHeader::RH_SET_NAME) {
@@ -40,14 +40,6 @@ void TcpServer::handleProcess(int nHeader, QString strIp, QString strName)
     }
 
     if(nHeader == RequestHeader::RH_RECEIVED_ALERT) {
-        QByteArray block;
-        QDataStream out(&block, QIODevice::WriteOnly);
-        out.setVersion(QDataStream::Qt_6_5);
-
-        out << nHeader;
-        out << strIp;
-        out << strName;
-
         int nLength = m_lstSocket.count();
 
         for(int i = 0; i < nLength; i++) {
@@ -56,8 +48,8 @@ void TcpServer::handleProcess(int nHeader, QString strIp, QString strName)
                 QDataStream out(&block, QIODevice::WriteOnly);
                 out.setVersion(QDataStream::Qt_6_5);
 
-                QString strMyIp = m_lstSocket[i]->peerAddress().toString();
-                QString strMyName = m_lstSocket[i]->peerName();
+                QString strMyIp = pSocket->peerAddress().toString();
+                QString strMyName = pSocket->peerName();
 
                 out << nHeader;
                 out << strMyIp;
