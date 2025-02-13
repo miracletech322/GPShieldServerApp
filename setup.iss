@@ -1,8 +1,9 @@
 ; Example Inno Setup Script
-#define MyAppName "GPShield Server Application"
+#define MyAppName "GPShield"
 #define MyAppVersion "1.0.0"
 #define MyAppPublisher "GPShield Technologies"
-#define MyAppExeName "GPShieldServer.exe"
+#define MyAppExeName "GPShieldServerApp.exe"
+#define MyAppExeClient "GPShieldClientApp.exe"
 #define MyAppIcon "E:\GPShield\app.ico"
 
 [Setup]
@@ -16,7 +17,7 @@ ArchitecturesInstallIn64BitMode=x64compatible
 DisableProgramGroupPage=yes
 PrivilegesRequired=admin
 OutputDir=E:\
-OutputBaseFilename=GPShieldServer
+OutputBaseFilename=GPShield
 SetupIconFile={#MyAppIcon}
 Compression=lzma
 SolidCompression=yes
@@ -33,10 +34,12 @@ Source: "E:\GPShield\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs c
 
 [Icons]
 ; Start Menu Shortcut with Icon
-Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{#MyAppIcon}"; IconIndex: 0
+Name: "{autoprograms}\{#MyAppName} Server App"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{#MyAppIcon}"; IconIndex: 0
+Name: "{autoprograms}\{#MyAppName} Client App"; Filename: "{app}\{#MyAppExeClient}"; IconFilename: "{#MyAppIcon}"; IconIndex: 0
 
 ; Desktop Shortcut with Icon
-Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon; IconFilename: "{#MyAppIcon}"; IconIndex: 0
+Name: "{autodesktop}\{#MyAppName} Server App"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon; IconFilename: "{#MyAppIcon}"; IconIndex: 0
+Name: "{autodesktop}\{#MyAppName} Client App"; Filename: "{app}\{#MyAppExeClient}"; Tasks: desktopicon; IconFilename: "{#MyAppIcon}"; IconIndex: 0
 
-[Run]
-Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+; Startup Shortcut
+Name: "{commonstartup}\{#MyAppName}"; Filename: "{app}\{#MyAppExeClient}"; IconFilename: "{#MyAppIcon}"; IconIndex: 0
