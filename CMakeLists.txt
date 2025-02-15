@@ -26,6 +26,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         tcpserver.h tcpserver.cpp
         tcpsocket.h tcpsocket.cpp
         global_vars.h global_vars.cpp
+        Resource.qrc
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET GPShieldServerApp APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
