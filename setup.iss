@@ -42,4 +42,5 @@ Name: "{autodesktop}\{#MyAppName} Server App"; Filename: "{app}\{#MyAppExeName}"
 Name: "{autodesktop}\{#MyAppName} Client App"; Filename: "{app}\{#MyAppExeClient}"; Tasks: desktopicon; IconFilename: "{#MyAppIcon}"; IconIndex: 0
 
 ; Startup Shortcut
-Name: "{commonstartup}\{#MyAppName}"; Filename: "{app}\{#MyAppExeClient}"; IconFilename: "{#MyAppIcon}"; IconIndex: 0
+Name: "{commonstartup}\{#MyAppName} Server App"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{#MyAppIcon}"; IconIndex: 0
+Name: "{commonstartup}\{#MyAppName} Client App"; Filename: "{app}\{#MyAppExeClient}"; IconFilename: "{#MyAppIcon}"; IconIndex: 0
