@@ -1,9 +1,8 @@
 ; Example Inno Setup Script
-#define MyAppName "GPShield"
+#define MyAppName "GPShield Server App"
 #define MyAppVersion "1.0.0"
 #define MyAppPublisher "GPShield Technologies"
 #define MyAppExeName "GPShieldServerApp.exe"
-#define MyAppExeClient "GPShieldClientApp.exe"
 #define MyAppIcon "E:\GPShield\app.ico"
 
 [Setup]
@@ -34,16 +33,13 @@ Source: "E:\GPShield\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs c
 
 [Icons]
 ; Start Menu Shortcut with Icon
-Name: "{autoprograms}\{#MyAppName} Server App"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\app.ico"; IconIndex: 0
-Name: "{autoprograms}\{#MyAppName} Client App"; Filename: "{app}\{#MyAppExeClient}"; IconFilename: "{app}\app.ico"; IconIndex: 0
+Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\app.ico"; IconIndex: 0
 
 ; Desktop Shortcut with Icon
-Name: "{autodesktop}\{#MyAppName} Server App"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon; IconFilename: "{app}\app.ico"; IconIndex: 0
-Name: "{autodesktop}\{#MyAppName} Client App"; Filename: "{app}\{#MyAppExeClient}"; Tasks: desktopicon; IconFilename: "{app}\app.ico"; IconIndex: 0
+Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon; IconFilename: "{app}\app.ico"; IconIndex: 0
 
 ; Startup Shortcut
-Name: "{commonstartup}\{#MyAppName} Server App"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\app.ico"; IconIndex: 0
-Name: "{commonstartup}\{#MyAppName} Client App"; Filename: "{app}\{#MyAppExeClient}"; IconFilename: "{app}\app.ico"; IconIndex: 0
+Name: "{commonstartup}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; IconFilename: "{app}\app.ico"; IconIndex: 0
 
 [Registry]
 ; Delete the registry key during installation

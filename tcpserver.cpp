@@ -10,11 +10,11 @@ TcpServer::TcpServer(QObject *parent)
 
 }
 
-void TcpServer::handleProcess(int nHeader, QString strIp, QString strName, TcpSocket* pSocket)
+void TcpServer::handleProcess(int nHeader, QString strIp, QString strDepart, QString strName, TcpSocket* pSocket)
 {
     QMutexLocker locker(&m_mutex);
     if(nHeader == RequestHeader::RH_SET_NAME) {
-        MainWindow::getInstance()->handleProcessStatus(HandleProcessStatus::HPS_PEER_SET_INFO, tr("%1(%2)").arg(strName).arg(strIp));
+        MainWindow::getInstance()->handleProcessStatus(HandleProcessStatus::HPS_PEER_SET_INFO, tr("%1/%2(%3)").arg(strDepart).arg(strName).arg(strIp));
     }
 
     if(nHeader == RequestHeader::RH_SEND_ALERT) {
@@ -25,6 +25,7 @@ void TcpServer::handleProcess(int nHeader, QString strIp, QString strName, TcpSo
         out << nHeader;
         out << strIp;
         out << strName;
+        out << strDepart;
 
         int nLength = m_lstSocket.count();
 
@@ -36,7 +37,7 @@ void TcpServer::handleProcess(int nHeader, QString strIp, QString strName, TcpSo
             }
         }
 
-        MainWindow::getInstance()->handleProcessStatus(HandleProcessStatus::HPS_PEER_SEND, tr("%1(%2)").arg(strName).arg(strIp));
+        MainWindow::getInstance()->handleProcessStatus(HandleProcessStatus::HPS_PEER_SEND, tr("%1/%2(%3)").arg(strDepart).arg(strName).arg(strIp));
     }
 
     if(nHeader == RequestHeader::RH_RECEIVED_ALERT) {
@@ -54,9 +55,17 @@ void TcpServer::handleProcess(int nHeader, QString strIp, QString strName, TcpSo
                 out << nHeader;
                 out << strMyIp;
                 out << strMyName;
+                out << pSocket->m_strDepart;
+
                 m_lstSocket[i]->write(block);
 
-                MainWindow::getInstance()->handleProcessStatus(HandleProcessStatus::HPS_PEER_RECEIVED, tr("The %1(%2) has comfirmed %3(%4)'s alert.").arg(strMyName).arg(strMyIp).arg(strName).arg(strIp));
+                MainWindow::getInstance()->handleProcessStatus(HandleProcessStatus::HPS_PEER_RECEIVED, tr("The %1(%2) has comfirmed %3(%4)'s alert.")
+                    .arg(pSocket->m_strDepart)
+                    .arg(strMyName)
+                    .arg(strMyIp)
+                    .arg(strDepart)
+                    .arg(strName)
+                    .arg(strIp));
                 break;
             }
         }

@@ -33,10 +33,12 @@ void TcpSocket::slt_readyRead()
     int nHeader;
     QString strIp;
     QString strName;
+    QString strDepart;
 
     in >> nHeader;
     in >> strIp;
     in >> strName;
+    in >> strDepart;
 
     in.commitTransaction();
 
@@ -44,18 +46,19 @@ void TcpSocket::slt_readyRead()
     {
         setPeerAddress(QHostAddress(strIp));
         setPeerName(strName);
+        m_strDepart = strDepart;
 
-        m_pServer->handleProcess(nHeader, strIp, strName);
+        m_pServer->handleProcess(nHeader, strIp, strDepart, strName);
     }
 
     if(nHeader == RequestHeader::RH_SEND_ALERT)
     {
-        m_pServer->handleProcess(nHeader, strIp, strName);
+        m_pServer->handleProcess(nHeader, strIp, strDepart, strName);
     }
 
     if(nHeader == RequestHeader::RH_RECEIVED_ALERT)
     {
-        m_pServer->handleProcess(nHeader, strIp, strName, this);
+        m_pServer->handleProcess(nHeader, strIp, strDepart, strName, this);
     }
 }
 

@@ -10,6 +10,8 @@ class TcpSocket : public QTcpSocket
 public:
     explicit TcpSocket(int socketDescriptor, QObject *parent = nullptr);
 
+    QString m_strDepart;
+
 signals:
     void sig_error(TcpSocket*);
 

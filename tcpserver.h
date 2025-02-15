@@ -13,7 +13,7 @@ class TcpServer : public QTcpServer
 public:
     TcpServer(QObject *parent = nullptr);
 
-    void handleProcess(int nHeader, QString strIp, QString strName, TcpSocket* pSocket = nullptr);
+    void handleProcess(int nHeader, QString strIp, QString strDepart, QString strName, TcpSocket* pSocket = nullptr);
 
 protected:
     void incomingConnection(qintptr socketDescriptor) override;
