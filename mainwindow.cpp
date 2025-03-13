@@ -12,8 +12,14 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
+    trayIcon = new QSystemTrayIcon(this);
+    QIcon icon(":/Resource/assets/logo.png");
+    trayIcon->setIcon(icon);
+    trayIcon->show();
+
     QSettings settings(APP_NAME);
     QString strLicense = settings.value("License").toString();
+
 
     if(strLicense == "")
     {
@@ -43,13 +49,22 @@ MainWindow::MainWindow(QWidget *parent)
             QDate currentDate = QDate::currentDate();
             if (registeredDate >= currentDate)
             {
+                int nRemaining = currentDate.daysTo(registeredDate);
                 ui->plainTextEdit->appendPlainText(
                     tr("License Key: %1\tType: %2\tExpire: %3\tRemaining: %4 day(s)")
                         .arg(settings.value("License").toString().insert(4, "-").insert(9, "-").insert(14, "-").insert(19, "-"))
                         .arg(lst[2])
                         .arg(lst[1])
-                        .arg(currentDate.daysTo(registeredDate))
+                        .arg(nRemaining)
                 );
+
+
+                if(nRemaining <= 30)
+                {
+                    trayIcon->showMessage("License Expiry Reminder",
+                                          tr("Your license key is valid for %1 day(s). Please renew before it expires to avoid service interruption.").arg(currentDate.daysTo(registeredDate)),
+                                          QSystemTrayIcon::Warning, 5000);
+                }
 
                 initServer();
             }

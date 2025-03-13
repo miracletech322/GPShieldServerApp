@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QtWidgets>
+#include <QSystemTrayIcon>
 
 #include "tcpserver.h"
 
@@ -33,5 +34,6 @@ private:
     Ui::MainWindow *ui;
 
     TcpServer m_server;
+    QSystemTrayIcon *trayIcon;
 };
 #endif // MAINWINDOW_H
