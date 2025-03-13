@@ -48,8 +48,20 @@
      <height>21</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuLicense">
+    <property name="title">
+     <string>License</string>
+    </property>
+    <addaction name="actionRegister"/>
+   </widget>
+   <addaction name="menuLicense"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionRegister">
+   <property name="text">
+    <string>Register License</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

@@ -21,9 +21,13 @@ public:
 
     static MainWindow* getInstance();
     void handleProcessStatus(int nStatus, QString strMessage = "");
+    void initServer();
 
 protected:
     void closeEvent(QCloseEvent *event);
+
+public slots:
+    void on_actionRegister_triggered();
 
 private:
     Ui::MainWindow *ui;
